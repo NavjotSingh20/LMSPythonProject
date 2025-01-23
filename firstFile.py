@@ -28,5 +28,6 @@ class Books:
 
 
 
-book1 = Books('Test', 'Test 2', 300)
-print(Books.get_author_by_title('Test'))
+book1 = Books("Test Title", "Test Author", 1)
+a = input("Enter author name: ")
+print(Books.get_title_by_author(a))
