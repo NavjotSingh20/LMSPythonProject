@@ -2,9 +2,10 @@ class Books:
     books_title = {}
     books_author = {}
     
-    def __init__(self, title, author, copies):
+    def __init__(self, title, author, genre, copies):
         self.title = title
         self.author =  author
+        self.genre = genre
         self.copies = copies
 
         Books.books_title[title] = self
@@ -26,8 +27,9 @@ class Books:
         else:
             return "Book not found"
 
+#Sub class for genres can be added for further advancement
 
-
-book1 = Books("Test Title", "Test Author", 1)
+book1 = Books("Test Title", "Test Author", "Tech", 500)
+book2 = Books("Test Title 2", "Test Author", "horror", 500)
 a = input("Enter author name: ")
 print(Books.get_title_by_author(a))
