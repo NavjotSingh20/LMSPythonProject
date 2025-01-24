@@ -57,4 +57,4 @@ class Books:
 book1 = Books("Test Title", "Test Author", "History", 500)
 book2 = Books("Test Title 2", "Test Author", "Fiction", 500)
 test = input("Enter author name: ")
-print(Books.get_books_by_author(a))
+print(Books.get_books_by_author(test))
