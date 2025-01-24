@@ -84,6 +84,34 @@ class Books:
         bfile.close()
 
 
+def edit_copies(title, new_copies):
+    bfile3 = open("library_data.txt", "r")
+    lines = bfile3.readlines()
+    updated_lines = []
+    book_found = False
+
+    for line in lines:
+        file_title, author, genre, copies = line.strip().split(",")
+
+        if file_title.lower() == title.lower():
+            book_found = True
+            updated_lines.append(f"{file_title},{author},{genre},{new_copies}\n")
+        else:
+            updated_lines.append(line)
+
+    bfile3.close()
+
+    if not book_found:
+        print("Error")
+        return
+
+    bfile4 = open("library_data.txt", "w")
+    bfile4.writelines(updated_lines)
+    bfile4.close()
+
+    Books.refresh_data()
+
+
 bfile2 = open("library_data.txt", "r")
 lines = bfile2.readlines()
 
@@ -92,6 +120,3 @@ for line in lines[1:]:
     Books(title, author, genre, int(copies))
 
 bfile2.close()
-
-a = input("Enter author name: ").strip()
-print(Books.get_books_by_author(a))
