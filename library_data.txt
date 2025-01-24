@@ -8,4 +8,4 @@ The Art of War,William Lee,History,2
 Astronomy 101,Linda Taylor,Technology,3
 The Great Adventure,Chris Davis,Fiction,1
 Learn JavaScript,Karen Wilson,Educational,4
-Gardening for Beginners,Robert White,Technology,2
+Gardening for Beginners,Linda Taylor,Technology,2
