@@ -30,7 +30,6 @@ class Books:
         self.author = author
         self.copies = copies
 
-
         Books.original_titles[title.lower()] = title
         Books.original_authors[author.lower()] = author
 
@@ -63,17 +62,36 @@ class Books:
         else:
             return "Book not found"
 
+    @classmethod
+    def clear_all(cls):
+        for genre in cls.genres.values():
+            genre.all_books.clear()
 
-bfile = open("library_data.txt", "r")
-lines = bfile.readlines()
+        cls.books_title.clear()
+        cls.books_author.clear()
 
+    @classmethod
+    def refresh_data(cls):
+        Books.clear_all()
+
+        bfile = open("library_data.txt", "r")
+        lines = bfile.readlines()
+
+        for line in lines[1:]:
+            title, author, genre, copies = line.strip().split(",")
+            Books(title, author, genre, int(copies))
+
+        bfile.close()
+
+
+bfile2 = open("library_data.txt", "r")
+lines = bfile2.readlines()
 
 for line in lines[1:]:
     title, author, genre, copies = line.strip().split(",")
     Books(title, author, genre, int(copies))
 
-bfile.close()
-
+bfile2.close()
 
 a = input("Enter author name: ").strip()
 print(Books.get_books_by_author(a))
