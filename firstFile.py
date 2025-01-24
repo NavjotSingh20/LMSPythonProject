@@ -20,10 +20,10 @@ class Books:
 
     books_title = {}
     books_author = {}
-    
+
     def __init__(self, title, author, genre, copies):
         self.title = title
-        self.author =  author
+        self.author = author
         self.copies = copies
 
         if genre in Books.genres:
@@ -54,7 +54,12 @@ class Books:
             return "Book not found"
 
 
-book1 = Books("Test Title", "Test Author", "History", 500)
-book2 = Books("Test Title 2", "Test Author", "Fiction", 500)
-test = input("Enter author name: ")
-print(Books.get_books_by_author(test))
+bfile = open("library_data.txt", "r")
+lines = bfile.readlines()
+for lines in lines[1:]:
+    title, author, genre, copies = lines.strip().split(",")
+    Books(title, author, genre, int(copies))
+
+print(Books.Educational.all_books)
+
+bfile.close()
