@@ -39,3 +39,15 @@ admins={
 
       choice=int(input("enter your choice"))
        if choice==1:
+           add_new_book()
+       elif choice==2:
+           restock_book()
+       elif choice==3:
+           print("logging out")
+       else:
+           print("invalid choice")
+
+    def main():
+        print("welcome")
+        
+                
