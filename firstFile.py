@@ -115,6 +115,19 @@ def edit_copies(title, new_copies):
 bfile2 = open("library_data.txt", "r")
 lines = bfile2.readlines()
 
+
+class library(Books):
+    def __init__(self):
+        self.books = []
+
+    def borrow_book(self):
+        for book in books:
+            if (book.isborrowed == False):
+                self.books.append(book)
+            else:
+                print("you have already borrowed this book")
+
+
 for line in lines[1:]:
     title, author, genre, copies = line.strip().split(",")
     Books(title, author, genre, int(copies))
