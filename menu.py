@@ -1,3 +1,7 @@
+import firstFile.py
+import user_login.py
+import adminlogin.py
+
 print("THIS PROJECT WILL HELP YOU TO UNDERSTAND HOW A LIBRARY MANAGEMENT SYSTEM WORKS ")
 print("")
 print("")
