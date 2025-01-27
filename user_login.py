@@ -105,7 +105,7 @@ def return_books(user_id, book_title):
     edit_copies(book_title, book.copies)
     Books.refresh_data()
 
-    return f"{book_title} successfully returned by {user.username}."
+    return f"{book_title} successfully returned by {user.name}."
 
 def show_borrowed_books(user_id):
     user = User.users_data.get(user_id)
@@ -116,7 +116,7 @@ def show_borrowed_books(user_id):
     books_count = user.books_borrowed
 
     if books_count == 0:
-        return f"{user.username} has not borrowed any books."
+        return f"{user.name} has not borrowed any books."
     else:
-        return f"{user.username} has borrowed {books_count} books: {', '.join(borrowed_books)}."
+        return f"{user.name} has borrowed {books_count} books: {', '.join(borrowed_books)}."
 
