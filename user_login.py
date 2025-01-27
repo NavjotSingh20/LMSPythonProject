@@ -50,7 +50,7 @@ def borrow_books(user_id, book_title):
     for line in lines:
         if line.startswith(user.user_id):
             updated_lines.append(
-                f"{user.user_id},{user.username},{user.books_borrowed}," +
+                f"{user.user_id},{user.name},{user.books_borrowed}," +
                 f"{user.borrowed_books[0] or ''},{user.borrowed_books[1] or ''},{user.borrowed_books[2] or ''}\n"
             )
         else:
@@ -63,8 +63,7 @@ def borrow_books(user_id, book_title):
     edit_copies(book_title, book.copies)
     Books.refresh_data()
 
-    return f"{book_title} successfully borrowed by {user.username}."
-
+    return f"{book_title} successfully borrowed by {user.name}."
 
 def return_books(user_id, book_title):
     user = User.users_data.get(user_id)
