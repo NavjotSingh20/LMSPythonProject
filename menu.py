@@ -1,6 +1,6 @@
 import firstFile
 import user_login
-from firstFile import Books, edit_copies
+from firstFile import Books, edit_copies, load_books, show_all_books
 from user_login import User, borrow_books, return_books, show_borrowed_books, load_users
 import adminlogin
 from adminlogin import admins
@@ -13,6 +13,7 @@ print("")
 
 Books.refresh_data()
 load_users()
+load_books()
 
 while True:
     print("\nMAIN MENU")
@@ -100,8 +101,7 @@ while True:
 
                         elif user_choice == 4:
                             print("\nAvailable books:")
-                            for book in Books.all_books:
-                                print(f"{book.title} by {book.author} (Genre: {book.genre}, Copies: {book.copies})")
+                            show_all_books()
 
                         elif user_choice == 5:
                             result = show_borrowed_books(user_id)

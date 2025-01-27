@@ -12,6 +12,16 @@ class User:
 
         User.users_data[user_id] = self
 
+    @staticmethod
+    def save_users():
+        with open("user_data.txt", "w") as file:
+            file.write("UserID,UserName,BooksBorrowed,Book1,Book2,Book3\n")
+            for user in User.users_data.values():
+                file.write(
+                    f"{user.user_id},{user.name},{user.books_borrowed},"
+                    f"{user.borrowed_books[0] or ''},{user.borrowed_books[1] or ''},{user.borrowed_books[2] or ''}\n"
+                )
+
 def load_users():
     userfile = open("user_data.txt", "r")
     lines = userfile.readlines()
@@ -42,28 +52,27 @@ def borrow_books(user_id, book_title):
     user.books_borrowed += 1
     book.copies -= 1
 
-    user_file = open("user_data.txt", "r")
-    lines = user_file.readlines()
-    user_file.close()
+    with open("user_data.txt", "r") as user_file:
+        lines = user_file.readlines()
 
     updated_lines = []
     for line in lines:
         if line.startswith(user.user_id):
             updated_lines.append(
-                f"{user.user_id},{user.username},{user.books_borrowed}," +
+                f"{user.user_id},{user.name},{user.books_borrowed}," +
                 f"{user.borrowed_books[0] or ''},{user.borrowed_books[1] or ''},{user.borrowed_books[2] or ''}\n"
             )
         else:
             updated_lines.append(line)
 
-    user_file = open("user_data.txt", "w")
-    user_file.writelines(updated_lines)
-    user_file.close()
+    with open("user_data.txt", "w") as user_file:
+        user_file.writelines(updated_lines)
 
     edit_copies(book_title, book.copies)
     Books.refresh_data()
 
-    return f"{book_title} successfully borrowed by {user.username}."
+    return f"{book_title} successfully borrowed by {user.name}."
+
 
 
 def return_books(user_id, book_title):
@@ -74,7 +83,7 @@ def return_books(user_id, book_title):
     if book_title not in user.borrowed_books:
         return "Book not found in the user's borrowed list."
 
-    user.borrowed_books.remove(book_title)
+    user.borrowed_books = [book for book in user.borrowed_books if book != book_title]
     user.books_borrowed -= 1
 
     book = Books.books_title.get(book_title.lower())
@@ -83,15 +92,14 @@ def return_books(user_id, book_title):
     else:
         return "Error: Book not found in library data."
 
-    user_file = open("user_data.txt", "r")
-    lines = user_file.readlines()
-    user_file.close()
+    with open("user_data.txt", "r") as user_file:
+        lines = user_file.readlines()
 
     updated_lines = []
     for line in lines:
         if line.startswith(user.user_id):
             updated_lines.append(
-                f"{user.user_id},{user.username},{user.books_borrowed}," +
+                f"{user.user_id},{user.name},{user.books_borrowed}," +
                 f"{user.borrowed_books[0] if len(user.borrowed_books) > 0 else ''}," +
                 f"{user.borrowed_books[1] if len(user.borrowed_books) > 1 else ''}," +
                 f"{user.borrowed_books[2] if len(user.borrowed_books) > 2 else ''}\n"
@@ -99,14 +107,14 @@ def return_books(user_id, book_title):
         else:
             updated_lines.append(line)
 
-    user_file = open("user_data.txt", "w")
-    user_file.writelines(updated_lines)
-    user_file.close()
+    with open("user_data.txt", "w") as user_file:
+        user_file.writelines(updated_lines)
 
     edit_copies(book_title, book.copies)
     Books.refresh_data()
 
-    return f"{book_title} successfully returned by {user.username}."
+    return f"{book_title} successfully returned by {user.name}."
+
 
 def show_borrowed_books(user_id):
     user = User.users_data.get(user_id)
