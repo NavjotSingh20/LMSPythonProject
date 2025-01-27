@@ -73,7 +73,9 @@ def return_books(user_id, book_title):
     if book_title not in user.borrowed_books:
         return "Book not found in the user's borrowed list."
 
-    user.borrowed_books.remove(book_title)
+    index = user.borrowed_books.index(book_title)
+    user.borrowed_books[index] = None
+
     user.books_borrowed -= 1
 
     book = Books.books_title.get(book_title.lower())
@@ -82,9 +84,8 @@ def return_books(user_id, book_title):
     else:
         return "Error: Book not found in library data."
 
-    user_file = open("user_data.txt", "r")
-    lines = user_file.readlines()
-    user_file.close()
+    with open("user_data.txt", "r") as user_file:
+        lines = user_file.readlines()
 
     updated_lines = []
     for line in lines:
@@ -98,14 +99,14 @@ def return_books(user_id, book_title):
         else:
             updated_lines.append(line)
 
-    user_file = open("user_data.txt", "w")
-    user_file.writelines(updated_lines)
-    user_file.close()
+    with open("user_data.txt", "w") as user_file:
+        user_file.writelines(updated_lines)
 
     edit_copies(book_title, book.copies)
     Books.refresh_data()
 
     return f"{book_title} successfully returned by {user.name}."
+
 
 def show_borrowed_books(user_id):
     user = User.users_data.get(user_id)
