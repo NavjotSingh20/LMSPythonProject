@@ -10,7 +10,7 @@ def admin_login():
      print ("admin login")
 username=input("enter admin username:")
 password=input("enter admin password:")
-if username in admins and admins[username]==paassword:
+if username in admins and admins[username]==password:
         print("login successful")
 else:
         print("invalid credentials")
