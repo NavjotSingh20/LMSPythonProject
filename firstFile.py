@@ -83,6 +83,14 @@ class Books:
 
         bfile.close()
 
+def load_books():
+    bfile2 = open("library_data.txt", "r")
+    lines = bfile2.readlines()
+    for line in lines[1:]:
+        title, author, genre, copies = line.strip().split(",")
+        Books(title, author, genre, int(copies))
+    bfile2.close()
+
 
 def edit_copies(title, new_copies):
     bfile3 = open("library_data.txt", "r")
@@ -110,26 +118,3 @@ def edit_copies(title, new_copies):
     bfile4.close()
 
     Books.refresh_data()
-
-
-bfile2 = open("library_data.txt", "r")
-lines = bfile2.readlines()
-
-
-class library(Books):
-    def __init__(self):
-        self.books = []
-
-    def borrow_book(self):
-        for book in books:
-            if (book.isborrowed == False):
-                self.books.append(book)
-            else:
-                print("you have already borrowed this book")
-
-
-for line in lines[1:]:
-    title, author, genre, copies = line.strip().split(",")
-    Books(title, author, genre, int(copies))
-
-bfile2.close()
