@@ -90,7 +90,7 @@ def return_books(user_id, book_title):
     for line in lines:
         if line.startswith(user.user_id):
             updated_lines.append(
-                f"{user.user_id},{user.username},{user.books_borrowed}," +
+                f"{user.user_id},{user.name},{user.books_borrowed}," +
                 f"{user.borrowed_books[0] if len(user.borrowed_books) > 0 else ''}," +
                 f"{user.borrowed_books[1] if len(user.borrowed_books) > 1 else ''}," +
                 f"{user.borrowed_books[2] if len(user.borrowed_books) > 2 else ''}\n"
