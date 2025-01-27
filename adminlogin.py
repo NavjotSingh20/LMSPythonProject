@@ -1,10 +1,8 @@
 import firstFile
 from firstFile import Books
-
-# dictionary to store admin credentials
 admins = {
-    "admin1": "password1",
-    "admin2": "password2"
+    "admin1": "123",
+    "admin2": "123"
 }
 
 
