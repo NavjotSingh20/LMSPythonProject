@@ -25,9 +25,9 @@ class Books:
     original_authors = {}
 
     def __init__(self, title, author, genre, copies):
-
         self.title = title
         self.author = author
+        self.genre = genre
         self.copies = copies
 
         Books.original_titles[title.lower()] = title
@@ -83,6 +83,14 @@ class Books:
 
         bfile.close()
 
+    @classmethod
+    def save_to_file(cls):
+        with open("library_data.txt", "w") as file:
+            file.write("Title,Author,Genre,Copies\n")
+            for book in cls.books_title.values():
+                file.write(f"{book.title},{book.author},{book.genre},{book.copies}\n")
+
+
 def load_books():
     bfile2 = open("library_data.txt", "r")
     lines = bfile2.readlines()
@@ -100,7 +108,6 @@ def edit_copies(title, new_copies):
 
     for line in lines:
         file_title, author, genre, copies = line.strip().split(",")
-
         if file_title.lower() == title.lower():
             book_found = True
             updated_lines.append(f"{file_title},{author},{genre},{new_copies}\n")
@@ -118,3 +125,18 @@ def edit_copies(title, new_copies):
     bfile4.close()
 
     Books.refresh_data()
+
+
+def show_all_books():
+    # Collecting all books from all genres
+    all_books = []
+    for genre in Books.genres.values():
+        all_books.extend(genre.all_books)
+
+    if not all_books:
+        print("No books available in the library.")
+        return
+
+    print("List of all books:")
+    for book in all_books:
+        print(f"'{book.title}' by {book.author}")

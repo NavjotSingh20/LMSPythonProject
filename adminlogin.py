@@ -21,24 +21,37 @@ def admin_login():
 
 
 def add_new_book():
-    print("add books")
-    book_title = input("enter book title")
-    book_author = input("enter book author")
-    book_quantity = int(input("enter quantity"))
-    if book_title in Books.books_title:
-        print("book already exists ,use restock to add more books")
-    else:
-        print("added successfully")
+    title = input("Enter book title: ")
+    author = input("Enter book author: ")
+    genre = input("Enter book genre: ")
+    if genre not in Books.genres:
+        return "Invalid genre."
+    try:
+        copies = int(input("Enter quantity: "))
+        if title.lower() in Books.books_title:
+            return "Book already exists. Use restock to add more copies."
+        else:
+            Books(title, author, genre, copies)
+            Books.save_to_file()  # Save the new book to the file
+            return "Book added successfully!"
+    except ValueError:
+        return "Invalid input for quantity."
+
 
 
 def restock_book():
-    print("restock books")
-    book_title = input("enter title")
-    if book_title in Books.books_title:
-        additional_copies = int(input("enter the number of copies"))
-        book_title.copies += additional_copies
+    title = input("Enter book title: ")
+    if title.lower() in Books.books_title:
+        try:
+            additional_copies = int(input("Enter additional copies: "))
+            book = Books.books_title[title.lower()]
+            book.copies += additional_copies
+            Books.save_to_file()  # Save the updated number of copies to the file
+            return "Book restocked successfully!"
+        except ValueError:
+            return "Invalid input for additional copies."
     else:
-        print("no such book is available")
+        return "Book not found in library."
 
 
 def admin_menu():
