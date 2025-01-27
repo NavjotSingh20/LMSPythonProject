@@ -108,3 +108,16 @@ def return_books(user_id, book_title):
 
     return f"{book_title} successfully returned by {user.username}."
 
+def show_borrowed_books(user_id):
+    user = User.users_data.get(user_id)
+    if not user:
+        return "User not found."
+
+    borrowed_books = [book for book in user.borrowed_books if book]
+    books_count = user.books_borrowed
+
+    if books_count == 0:
+        return f"{user.username} has not borrowed any books."
+    else:
+        return f"{user.username} has borrowed {books_count} books: {', '.join(borrowed_books)}."
+
