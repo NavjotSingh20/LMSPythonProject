@@ -118,16 +118,65 @@ while True:
                 print("Invalid User ID. Please try again.")
 
         elif choice == 2:
-            print("Admin Login functionality remains unchanged.")
+            print("Admin Login")
+            username = input("Enter admin username: ")
+            password = input("Enter admin password: ")
 
+            if username in admins and admins[username] == password:
+                print("Login successful!")
+                while True:
+                    print("\nADMIN MENU")
+                    print("1. ADD A NEW BOOK")
+                    print("2. RESTOCK A BOOK")
+                    print("3. LOGOUT")
+
+                    try:
+                        admin_choice = int(input("Enter your choice: "))
+                        if admin_choice == 1:
+                            print("Add Books")
+                            book_title = input("Enter book title: ")
+                            book_author = input("Enter book author: ")
+                            book_genre = input("Enter book genre: ")
+                            try:
+                                book_quantity = int(input("Enter quantity: "))
+                                if book_title.lower() in Books.books_title:
+                                    print("Book already exists. Use restock to add more copies.")
+                                else:
+                                    Books(book_title, book_author, book_genre, book_quantity)
+                                    Books.save_to_file()
+                                    print(f"Book '{book_title}' added successfully!")
+                            except ValueError:
+                                print("Invalid input for quantity. Please enter a number.")
+                        elif admin_choice == 2:
+                            print("Restock Books")
+                            book_title = input("Enter the title of the book to restock: ")
+                            if book_title.lower() in Books.books_title:
+                                try:
+                                    additional_copies = int(input("Enter the number of copies to add: "))
+                                    book = Books.books_title[book_title.lower()]
+                                    book.copies += additional_copies
+                                    Books.save_to_file()
+                                    print(f"{additional_copies} copies added to '{book_title}'.")
+                                except ValueError:
+                                    print("Invalid input for copies. Please enter a number.")
+                            else:
+                                print("No such book is available.")
+                        elif admin_choice == 3:
+                            print("Logging out...")
+                            break
+                        else:
+                            print("Invalid choice. Please enter 1, 2, or 3.")
+                    except ValueError:
+                        print("Invalid input. Please enter a number.")
+            else:
+                print("Invalid credentials.")
         elif choice == 3:
             print("Exiting the system. Goodbye!")
             break
-
         else:
             print("Invalid choice. Please enter a number between 1 and 3.")
-
     except ValueError:
         print("Invalid input. Please enter a number.")
+
 
 
