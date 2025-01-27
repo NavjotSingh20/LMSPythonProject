@@ -1,5 +1,5 @@
 import firstFile
-from firstFile import books_title
+from firstFile import Books
 #dictionary to store admin credentials 
 admins={
     "admin1":"password1",
@@ -21,7 +21,7 @@ def add_new_book():
      book_title=input("enter book title")
      book_author=input("enter book author")
      book_quantity=int(input("enter quantity"))
-     if book_title in books_title:
+     if book_title in Books.books_title:
          print ("book already exists ,use restock to add more books")
      else:
          print("added successfully")
@@ -29,7 +29,7 @@ def add_new_book():
 def restock_book():
       print("restock books")
       book_title=input("enter title")
-      if book_title in books_title:
+      if book_title in Books.books_title:
            additional_copies=int(input("enter the number of copies"))
            book_title.copies+=additional_copies
       else:
