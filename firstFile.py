@@ -128,7 +128,6 @@ def edit_copies(title, new_copies):
 
 
 def show_all_books():
-    # Collecting all books from all genres
     all_books = []
     for genre in Books.genres.values():
         all_books.extend(genre.all_books)
