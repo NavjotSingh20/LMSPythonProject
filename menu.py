@@ -28,7 +28,6 @@ while True:
 
         if choice == 1:
             user_id = input("Enter your User ID: ")
-            password = input("Enter your Password: ")  
 
             if user_id in User.users_data:
                 user = User.users_data[user_id]
