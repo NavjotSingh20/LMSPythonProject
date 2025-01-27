@@ -178,6 +178,3 @@ while True:
             print("Invalid choice. Please enter a number between 1 and 3.")
     except ValueError:
         print("Invalid input. Please enter a number.")
-
-
-
