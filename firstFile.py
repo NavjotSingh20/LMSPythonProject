@@ -25,18 +25,16 @@ class Books:
     original_authors = {}
 
     def __init__(self, title, author, genre, copies):
-
         self.title = title
         self.author = author
         self.copies = copies
 
         Books.original_titles[title.lower()] = title
         Books.original_authors[author.lower()] = author
-
         if genre in Books.genres:
             Books.genres[genre].all_books.append(self)
         else:
-            print("Genre not recognized")
+            print(f"Genre '{genre}' not recognized.")
 
         Books.books_title[title.lower()] = self
 
@@ -49,7 +47,7 @@ class Books:
     def get_author_by_title(cls, title):
         book = cls.books_title.get(title.lower())
         if book:
-            return cls.original_authors.get(book.author.lower())
+            return f"Author: {cls.original_authors.get(book.author.lower())}"
         else:
             return "Book not found"
 
@@ -58,9 +56,21 @@ class Books:
         author = author.lower()
         books = cls.books_author.get(author)
         if books:
-            return [cls.original_titles.get(book.title.lower()) for book in books]
+            book_list = [cls.original_titles.get(book.title.lower()) for book in books]
+            return f"Books by {cls.original_authors.get(author)}: {', '.join(book_list)}"
         else:
-            return "Book not found"
+            return "Author not found"
+
+    @classmethod
+    def display_all_books(cls):
+        print("\nAvailable Books in the Library:")
+        print("=" * 50)
+        for genre, genre_class in cls.genres.items():
+            print(f"\n{genre} Books:")
+            print("-" * 50)
+            for book in genre_class.all_books:
+                print(f"Title: {book.title}, Author: {book.author}, Copies: {book.copies}")
+        print("=" * 50)
 
     @classmethod
     def clear_all(cls):
@@ -72,7 +82,7 @@ class Books:
 
     @classmethod
     def refresh_data(cls):
-        Books.clear_all()
+        cls.clear_all()
 
         bfile = open("library_data.txt", "r")
         lines = bfile.readlines()
@@ -108,13 +118,11 @@ def edit_copies(title, new_copies):
             updated_lines.append(line)
 
     bfile3.close()
-
     if not book_found:
-        print("Error")
+        print(f"Error: Book titled '{title}' not found in library data.")
         return
-
     bfile4 = open("library_data.txt", "w")
     bfile4.writelines(updated_lines)
     bfile4.close()
-
     Books.refresh_data()
+    print(f"Updated copies for '{title}'. New copies: {new_copies}")
