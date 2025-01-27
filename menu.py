@@ -1,6 +1,9 @@
 import firstFile
+import user_login
 from firstFile import Books, edit_copies
-from user_login import User, borrow_books, return_books, show_borrowed_books
+from user_login import User, borrow_books, return_books, show_borrowed_books, load_users
+import adminlogin
+from adminlogin import admins
 
 print("THIS PROJECT WILL HELP YOU TO UNDERSTAND HOW A LIBRARY MANAGEMENT SYSTEM WORKS")
 print("")
@@ -9,7 +12,7 @@ print("TOPIC: LIBRARY MANAGEMENT SYSTEM")
 print("")
 
 Books.refresh_data()
-User.load_users()
+load_users()
 
 while True:
     print("\nMAIN MENU")

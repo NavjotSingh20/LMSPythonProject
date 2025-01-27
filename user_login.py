@@ -12,14 +12,14 @@ class User:
 
         User.users_data[user_id] = self
 
-        @classmethod
-        def load_users(cls):
-            userfile = open("user_data.txt", "r")
-            lines = userfile.readlines()
-            for line in lines[1:]:
-                user_id, username, books_borrowed, borrowed_books = line.strip().split(",")
-                User(user_id, username, int(books_borrowed, *borrowed_books))
-            userfile.close()
+def load_users():
+    userfile = open("user_data.txt", "r")
+    lines = userfile.readlines()
+    for line in lines[1:]:
+        user_id, username, books_borrowed, book1, book2, book3 = line.strip().split(",")
+        User(user_id, username, int(books_borrowed), book1, book2, book3)
+    userfile.close()
+
 
 def borrow_books(user_id, book_title):
     user = User.users_data.get(user_id)
